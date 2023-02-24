@@ -23,8 +23,6 @@ class FlatAdmin(admin.ModelAdmin):
         'address',
         'price',
         'new_building',
-        # 'owners_phonenumber',
-        # 'owner_pure_phone',
     )
     list_editable = ('new_building',)
     list_filter = ('new_building', 'rooms_number', 'has_balcony',)
