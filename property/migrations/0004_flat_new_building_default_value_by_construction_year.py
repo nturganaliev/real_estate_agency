@@ -3,14 +3,10 @@ from django.db import migrations, models
 
 def categorize_building_by_construction_year(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = True
-            flat.save()
-        else:
-            flat.new_building = False
-            flat.save()
-
+    flats = Flat.objects.filter(construction_year__gte=2015)
+    for flat in flats:
+        flat.new_building = True
+        flat.save()
 
 
 class Migration(migrations.Migration):

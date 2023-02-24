@@ -6,14 +6,18 @@ from django.db import migrations
 def copy_data_from_flat_to_owner_model(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
-    flats = Flat.objects.all()
-    for flat in flats:
-        owner = Owner.objects.create()
-        owner.name=flat.master
-        owner.phone_number=flat.owners_phonenumber
-        owner.pure_phone=flat.owner_pure_phone
-        owner.flats.add(flat)
-        owner.save()
+    flats_iterator = iter(Flat.objects.all())
+    while True:
+        try:
+            owner = Owner.objects.get_or_create()
+            flat = flats_iterator.__next__()
+            owner.name=flat.master
+            owner.phone_number=flat.owners_phonenumber
+            owner.pure_phone=flat.owner_pure_phone
+            owner.flats.add(flat)
+            owner.save()
+        except StopIteration:
+            break
 
 
 class Migration(migrations.Migration):
