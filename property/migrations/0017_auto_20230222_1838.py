@@ -9,13 +9,14 @@ def copy_data_from_flat_to_owner_model(apps, schema_editor):
     flats_iterator = iter(Flat.objects.all())
     while True:
         try:
-            owner = Owner.objects.get_or_create()
             flat = flats_iterator.__next__()
-            owner.name=flat.master
-            owner.phone_number=flat.owners_phonenumber
-            owner.pure_phone=flat.owner_pure_phone
-            owner.flats.add(flat)
-            owner.save()
+            owner = Owner.objects.get_or_create(
+                name=flat.master,
+                phone_number=flat.owners_phonenumber,
+                pure_phone=flat.owner_pure_phone,
+            )
+            owner[0].flats.add(flat)
+            owner[0].save()
         except StopIteration:
             break
 
