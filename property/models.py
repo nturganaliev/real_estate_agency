@@ -42,7 +42,7 @@ class Flat(models.Model):
 
     has_balcony = models.BooleanField(
         'Наличие балкона',
-        null=True, 
+        null=True,
         db_index=True
     )
     active = models.BooleanField('Активно-ли объявление', db_index=True)
@@ -61,7 +61,7 @@ class Flat(models.Model):
     likes = models.ManyToManyField(
         User,
         verbose_name="Нравится",
-        related_name="flats",
+        related_name="liked_flats",
         blank=True,
     )
 
@@ -89,11 +89,11 @@ class Complaint(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user}'
+        return self.user
 
 
 class Owner(models.Model):
-    owner = models.CharField('ФИО владельца', max_length=200)
+    owner_name = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField(
         verbose_name='Номер владельца',
         max_length=20
@@ -112,4 +112,4 @@ class Owner(models.Model):
     )
 
     def __str__(self):
-        return f'{self.owner}'
+        return self.owner_name
