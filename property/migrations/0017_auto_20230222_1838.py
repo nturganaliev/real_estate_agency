@@ -6,7 +6,7 @@ from django.db import migrations
 def copy_data_from_flat_to_owner_model(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
-    flats_iterator = Flat.objects.all().iterator()
+    flats_iterator = Flat.objects.iterator()
     while True:
         try:
             flat = flats_iterator.__next__()
